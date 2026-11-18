@@ -1,0 +1,4 @@
+﻿displayName = Aurora
+author = ZenithOliver
+version = 0.1
+side = Both

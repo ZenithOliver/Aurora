@@ -1,0 +1,31 @@
+NPCs: {
+	Aurora: {
+		DisplayName: "Twin-Realm Hare"
+		Bestiary: "She insists that the physical and spiritual planes are superimposed, and that only she can see where they meet. Don't ask where the wood she sells actually comes from."
+		DeathMessage: "She said she was just popping back to the spirit plane to restock. Probably."
+
+		Dialogue: {
+			FirstMeeting: "The physical and the spiritual — only I can see where they melt into each other... Ah. Beautiful."
+			Standard1: "People always assume that what they see is the world."
+			Standard2: "Ashe, you've always wanted the Freljord to unite — but unity doesn't mean everyone has to be the same."
+			Standard3: "Nobody is ever truly alone. Spirits crowd around every one of us."
+			Standard4: "I should write home. At least tell them I'm still alive."
+			Standard5: "Wherever there's research to be done, there am I."
+			WeirdWeather: "When spirits swallow mortal suffering they turn wild and dangerous. That pain — I'll purify it myself."
+			AboutClothier: "{0} sews all day and never looks up. I conjured him some cloth; next morning there was a mended cloak at my door. I think that was his way of thanking me."
+		}
+	}
+}
+
+Items: {
+	AuroraWand: {
+		DisplayName: "Aurora's Wand"
+		Tooltip: "Fires a bolt of pure white starlight that bursts on impact\n'Borrow it. Don't lose it — I only have the one.'"
+	}
+}
+
+Projectiles: {
+	MoonCrescent: {
+		DisplayName: "Moonlit Crescent"
+	}
+}

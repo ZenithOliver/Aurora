@@ -1,0 +1,31 @@
+NPCs: {
+	Aurora: {
+		DisplayName: "双界灵兔"
+		Bestiary: "她坚持说，物质领域与精神领域在她眼里是叠在一起的。至于她卖给你的那些木头是从哪儿变出来的，最好别深究。"
+		DeathMessage: "她说她只是回精神领域补点货。大概吧。"
+
+		Dialogue: {
+			FirstMeeting: "物质领域和精神领域，只有我能看见它们的交融……啊，真美。"
+			Standard1: "人们总以为，眼见即为世界。"
+			Standard2: "艾希，你一直想让弗雷尔卓德团结起来，可团结并不意味着大家都要一模一样。"
+			Standard3: "其实没有谁真的孤身一人，灵物围绕在我们每个人身边。"
+			Standard4: "我该给家里写封信，起码告诉他们我还活着。"
+			Standard5: "哪里需要研究，哪里就有我。"
+			WeirdWeather: "灵物吸收了凡人的痛苦，就会变得狂野又危险。这份苦痛就由我来净化。"
+			AboutClothier: "{0}总在缝东西，头都不抬。我给他变了几块布，第二天门口多了一件改好的披风——他大概是谢我了。"
+		}
+	}
+}
+
+Items: {
+	AuroraWand: {
+		DisplayName: "阿罗拉的魔杖"
+		Tooltip: "挥出一颗纯白的星光弹，命中时炸开一小片光\n“借你用用。别弄丢了，我只有这一根。”"
+	}
+}
+
+Projectiles: {
+	MoonCrescent: {
+		DisplayName: "月光新月"
+	}
+}
