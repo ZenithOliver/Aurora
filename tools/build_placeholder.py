@@ -20,6 +20,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 OLD = os.path.join(HERE, "ref_design.png")
 NEW = os.path.join(HERE, "ref_poses.png")
+SIT_NEW = os.path.join(HERE, "ref_sit.png")
 
 FW, FH = 40, 56
 BODY_H = 52
@@ -29,7 +30,6 @@ PALETTE_SIZE = 24
 OLD_POSES = {
     "front":  (458, 587, 653, 942),
     "happy":  (912, 207, 1112, 524),
-    "sit":    (912, 670, 1312, 942),
     "eyescl": (1333, 215, 1504, 520),
 }
 OLD_HEAD = (41, 679, 372, 942)
@@ -130,6 +130,19 @@ def largest_component_only(img):
     return Image.fromarray(out, "RGBA")
 
 
+def load_sit():
+    """新的坐姿图是透明背景的 RGBA，直接用 alpha 通道，阈值 128 把软边收紧。
+    图里她是朝右坐在凳子上，游戏贴图基准朝左，所以镜像。"""
+    img = Image.open(SIT_NEW).convert("RGBA")
+    arr = np.array(img)
+    alpha = (arr[:, :, 3] > 128).astype(np.uint8) * 255
+    out = Image.fromarray(np.dstack([arr[:, :, :3], alpha]), "RGBA")
+    bbox = out.getbbox()
+    if bbox:
+        out = out.crop(bbox)
+    return out.transpose(Image.FLIP_LEFT_RIGHT)
+
+
 def build_palette(images, size=PALETTE_SIZE):
     total_w = sum(i.width for i in images)
     total_h = max(i.height for i in images)
@@ -161,9 +174,9 @@ def darken_edges(frame, factor=0.55):
     return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), "RGBA")
 
 
-def fit_frame(img, palette):
+def fit_frame(img, palette, body_h=BODY_H):
     # 等比缩放：按 宽/高 里更紧的那个来，绝不拉伸
-    scale = min(38.0 / img.width, BODY_H / img.height)
+    scale = min(38.0 / img.width, body_h / img.height)
     w = max(1, round(img.width * scale))
     h = max(1, round(img.height * scale))
     small = img.resize((w, h), Image.LANCZOS)
@@ -185,6 +198,8 @@ def main():
     for k, box in NEW_POSES.items():
         poses[k] = cut(a_new, box, use_flood=True)
 
+    poses["sit"] = load_sit()
+
     # 新立绘的侧身像是朝右的，而游戏贴图基准朝左，所以统一镜像
     MIRROR_WALK = True
     if MIRROR_WALK:
@@ -196,6 +211,8 @@ def main():
 
     palette = build_palette(list(poses.values()))
     frames = {k: fit_frame(v, palette) for k, v in poses.items()}
+    # 坐姿单独缩到 48px 高：人坐着本来就比站着矮，避免看起来放大了一号
+    frames["sit"] = fit_frame(poses["sit"], palette, body_h=48)
 
     walk = ["walk1", "walk2", "walk3", "walk4"]
     # 14 帧 = 每个姿势重复 2 帧，节奏比之前慢一半，避免"跺脚"
